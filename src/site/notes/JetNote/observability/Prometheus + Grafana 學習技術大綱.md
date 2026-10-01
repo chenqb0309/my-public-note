@@ -54,7 +54,7 @@ private static readonly Gauge TemperatureGauge =
     Metrics.CreateGauge("device_temperature_celsius", "Temperature", 
         new GaugeConfiguration { LabelNames = new[] { "device_id", "device_ip" } });
 
-TemperatureGauge.WithLabels("sensor1", "192.168.0.10").Set(28.5);
+TemperatureGauge.WithLabels("sensor1", "10.0.0.10").Set(28.5);
 ```
 
 ### 誤區修正

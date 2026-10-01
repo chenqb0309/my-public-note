@@ -19,4 +19,4 @@ Jet 的技術筆記 — .NET、DDD、AI Agent、系統設計
 - **Docker** — 容器化基礎筆記
 - **專案實戰** — 部署流程、Nginx 網關與藍綠部署、Windows Service、Radzen + Blazor
 
-全站共 60+ 篇筆記，請使用左側檔案樹瀏覽各分類。
+全站共 62 篇筆記，請使用左側檔案樹瀏覽各分類。

@@ -237,7 +237,7 @@ loki.process "add_label" {
 // Step 4. 寫入 Loki
 loki.write "grafana_loki" {
   endpoint {
-    url = "http://192.168.1.184:3100/loki/api/v1/push"
+    url = "http://10.0.0.184:3100/loki/api/v1/push"
   }
 }
 
@@ -399,7 +399,7 @@ loki.process "add_label2" {
 // Step 4. 寫入 Loki
 loki.write "grafana_loki" {
   endpoint {
-    url = "http://192.168.1.184:3100/loki/api/v1/push"
+    url = "http://10.0.0.184:3100/loki/api/v1/push"
   }
 }
 
