@@ -73,7 +73,7 @@ global:
   scrape_interval: 5s
 
 scrape_configs:
-  - job_name: "Agent.TempMoisDeviceDetector"
+  - job_name: "app-a-metrics"
     static_configs:
       - targets: ["host.docker.internal:5000"]
 ```

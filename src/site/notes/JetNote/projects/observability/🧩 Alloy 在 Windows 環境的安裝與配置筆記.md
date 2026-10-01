@@ -191,7 +191,7 @@ local.file_match "local_files" {
   //path前綴必須為此__path__""形式,否則Alloy會找不到key
   //路徑遵從設置規範需使用'/'否則會導致路徑匹配失敗
   //可以設定一個附加label=yourSettingName
-  path_targets = [{ "__path__" = "C:/Users/jet.chen/source/repos/MES/Source/APP_Agent/Agent.TempMoisDeviceDetector/logs/*.log","labelname"="appName" }]
+  path_targets = [{ "__path__" = "C:/App/LogSource-A/logs/*.log","labelname"="appName" }]
   sync_period  = "10s"
 }
 
@@ -249,14 +249,14 @@ loki.write "grafana_loki" {
 
 ``` config.alloy
 //=============================================================================//
-//======================TempMoisDeviceDetector Log Config======================//
+//======================LogSourceA Log Config======================//
 //=============================================================================//
 
 // Step 1. 掃描指定目錄下的 log
 local.file_match "local_files" {
   path_targets = [
-    { "__path__" = "C:/MES_Service/Agent.TempMoisDeviceDetector/logs/*.log",
-      "app"      = "TempMoisDeviceDetector",
+    { "__path__" = "C:/App/LogSource-A/logs/*.log",
+      "app"      = "LogSourceA",
     },
   ]
   sync_period = "10s"
@@ -293,13 +293,12 @@ loki.process "add_label" {
     source = "message"
     expressions = {
       Id           = "Id",
-      PrinterName  = "PrinterName",
-      LabelType    = "LabelType",
-      WorkOrderID  = "WorkOrderID",
-      MaterialID   = "MaterialID",
-      MaterialName = "MaterialName",
-      LotNo        = "LotNo",
+      No           = "No",
+      Code         = "Code",
+      Name         = "Name",
+      Type         = "Type",
       Qty          = "Qty",
+      Note         = "Note",
     }
   }*/
 
@@ -322,14 +321,14 @@ loki.process "add_label" {
 }
 
 //=============================================================================//
-//======================TempMoistureModbusClient Log Config======================//
+//======================LogSourceB Log Config======================//
 //=============================================================================//
 
 // Step 1. 掃描指定目錄下的 log
 local.file_match "local_files2" {
   path_targets = [
-    { "__path__" = "C:/MES_Service/Agent.TempMoistureModbusClient/logs/*.log",
-      "app"      = "TempMoistureModbusClient",
+    { "__path__" = "C:/App/LogSource-B/logs/*.log",
+      "app"      = "LogSourceB",
     },
   ]
   sync_period = "10s"
@@ -366,13 +365,12 @@ loki.process "add_label2" {
     source = "message"
     expressions = {
       Id           = "Id",
-      PrinterName  = "PrinterName",
-      LabelType    = "LabelType",
-      WorkOrderID  = "WorkOrderID",
-      MaterialID   = "MaterialID",
-      MaterialName = "MaterialName",
-      LotNo        = "LotNo",
+      No           = "No",
+      Code         = "Code",
+      Name         = "Name",
+      Type         = "Type",
       Qty          = "Qty",
+      Note         = "Note",
     }
   }*/
 

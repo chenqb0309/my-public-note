@@ -14,7 +14,7 @@ global:
 scrape_configs:
 
   # 若是沒有使用scrape_interval，則會使用 global 的設定
-  - job_name: "Agent.TempMoisDeviceDetector"
+  - job_name: "app-a-metrics"
     scrape_interval: 20s       # 覆蓋 global 設定，改成每 20 秒抓一次
     static_configs:
       - targets: ["host.docker.internal:5000"]  # 目標 IP 和端口
@@ -128,7 +128,7 @@ services:
     volumes:
       - ./alloy-config.hcl:/etc/alloy/config.alloy #alloy的設定檔
       #比較特別的部分是,因為alloy要讀取log檔案,所以要把log檔案的路徑mount進去
-      - C:\Users\jet.chen\source\repos\MES\Source\APP_Agent\Agent.TempMoisDeviceDetector\logs:/var/log/agent
+      - C:/App/LogSource-A/logs:/var/log/agent
 
 
   grafana:
