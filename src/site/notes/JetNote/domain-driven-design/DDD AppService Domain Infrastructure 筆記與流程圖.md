@@ -20,26 +20,19 @@
 
 ### 二、Aggregate Root 與 Entity
 
-* **CartonEntity（Aggregate Root）**
-
-  * 管理 BagEntity
-  * 封裝拆箱規則，確保一致性
-  * 方法: `CanSplit()`, `SplitBags()`
-
-* **BagEntity**
-
-  * 封裝拆袋規則
-  * 方法: `CanBeRemoved()`, `MarkAsSplit()`
-
-* **PrinterEntity**
-
-  * 屬性: Queue<PrintJob>, IsBusy
-  * 方法: `Enqueue()`, `Dequeue()`, `CanPrint()`
-
-* **DomainService 範例**
-
-  * 批量拆多個 Carton
-  * 批量判斷多個 Printer 是否可列印
+- **CartonEntity（Aggregate Root））**
+  - 管理 BagEntity
+  - 封裝拆箱規則，確保一致性
+  - 方法: `CanSplit()`, `SplitBags()`
+- **BagEntity**
+  - 封裝拆袋規則
+  - 方法: `CanBeRemoved()`, `MarkAsSplit()`
+- **PrinterEntity**
+  - 屬性: `Queue<PrintJob>`, IsBusy
+  - 方法: `Enqueue()`, `Dequeue()`, `CanPrint()`
+- **DomainService 範例**
+  - 批量拆多個 Carton
+  - 批量判斷多個 Printer 是否可列印
 
 ---
 
