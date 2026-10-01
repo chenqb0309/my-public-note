@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/jet-note/home/","tags":["gardenEntry"],"dg-note-properties":{}}
+{"dg-publish":true,"permalink":"/jet-note/home/","title":"JetNote","tags":["gardenEntry"],"dg-note-properties":{"title":"JetNote"}}
 ---
 
 
