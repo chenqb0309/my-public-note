@@ -138,5 +138,4 @@ public interface IPrinterHardware { Task PrintAsync(string data); }
    * 不直接修改 Domain 狀態規則
    * 管理多個 Aggregate / DomainService 呼叫順序
     
-![image](https://hackmd.io/_uploads/SJapJXDCbx.png)
 
