@@ -1,0 +1,46 @@
+---
+{"dg-publish":true,"permalink":"/jet-note/projects/project-setup/","title":"專案建置筆記","tags":["Project-Setup","Development"],"dg-note-properties":{"title":"專案建置筆記","tags":["Project-Setup","Development"],"created":"2025-03-14"}}
+---
+
+
+# 專案建置筆記
+
+## 流程
+
+### 專案建置
+
+1. 注意建置時候的資料夾歸屬情況
+2. 建置時就使用例如MES.Background.programName的方式歸屬
+
+---
+
+### Program配置
+
+1. 設定當前目錄為執行檔目錄
+
+    ```Csharp  
+    Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+    ```
+
+2. Builder & Services創建
+
+    ```Csharp
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+    ```
+
+3. 替換Log(如果有替換需求)
+
+    ```Csharp
+    //清除默認日誌提供程序
+    builder.Logging.ClearProviders();
+    //使用NLog作為日誌提供程序(調取NLog.config配置)
+    builder.Host.UseNLog();
+    //設置Windows服務
+    builder.Host.UseWindowsService(options =>
+    {
+      options.ServiceName = $"{AssemblyName} {AssemblyVersion}";
+    });
+    ```
+
+4. 添加自定義服務

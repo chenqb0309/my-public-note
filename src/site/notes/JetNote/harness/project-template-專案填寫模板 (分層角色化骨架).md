@@ -1,0 +1,137 @@
+---
+{"dg-publish":true,"permalink":"/jet-note/harness/project-template/","title":"專案填寫模板 (分層角色化骨架)","tags":["Vibe Coding"],"dg-note-properties":{"title":"專案填寫模板 (分層角色化骨架)","tags":["Vibe Coding"],"created":"2025-09-23"}}
+---
+
+
+# 專案填寫模板 (分層角色化骨架)
+
+### 1️⃣ 界定需求 (Define Requirements) \[核心欄位]
+
+* **專案目標**:
+
+  * 描述: 從來源抓資料 → 轉換 → 發送到目標系統或 API
+  * 範例: 將 RFIDMappingData 轉換成 MaterialRFIDProfile 並呼叫 MES API
+* **資料來源/目的地**:
+
+  * Source: RFIDMappingData (DB Table)
+  * Target: MES API / MaterialRFIDProfile
+
+### 2️⃣ 流程規劃 (Process Flow) \[核心欄位]
+
+* **線性流程**:
+
+  1. 取得資料 (DB)
+  2. 轉換資料 (Mapper / QRCode解析)
+  3. 發送資料 (API)
+  4. Logging & Exception handling
+  5. 驗證與回饋
+
+### 3️⃣ 角色劃分 (Roles) \[核心欄位]
+
+| 角色              | 職責     | 輸入                    | 輸出                    |
+| --------------- | ------ | --------------------- | --------------------- |
+| DataFetcher     | 抓取資料   | DB connection / Table | List<RFIDMappingData> |
+| DataMapper      | 轉換資料   | RFIDMappingData       | MaterialRFIDProfile   |
+| TransferService | 呼叫 API | MaterialRFIDProfile   | 成功/失敗狀態               |
+| Logger          | 記錄資訊   | 任何流程節點                | Log Entry             |
+
+### 4️⃣ 角色功能 (Role Functions) \[核心欄位]
+
+#### DataFetcher
+
+* 功能: 抓取資料表資料
+* 技術棧: EF Core, SQL Server
+* 核心程式 stub:
+
+```csharp
+public class DataFetcher
+{
+    public async Task<List<RFIDMappingData>> FetchAsync()
+    {
+        // 填寫抓取邏輯
+    }
+}
+```
+
+#### DataMapper
+
+* 功能: Source -> Target 映射，QRCode 解析
+* 技術棧: C# class / 字串解析函數
+* 核心程式 stub:
+
+```csharp
+public class DataMapper
+{
+    public MaterialRFIDProfile Map(RFIDMappingData source)
+    {
+        // 填寫欄位映射規則
+    }
+}
+```
+
+#### TransferService
+
+* 功能: API 傳送，處理 Retry / Timeout
+* 技術棧: HttpClient, Polly
+* 核心程式 stub:
+
+```csharp
+public class TransferService
+{
+    public async Task<bool> SendAsync(MaterialRFIDProfile profile)
+    {
+        // 填寫 API 呼叫邏輯
+    }
+}
+```
+
+#### Logger
+
+* 功能: 記錄成功/失敗, Exception
+* 技術棧: Serilog
+* 核心程式 stub:
+
+```csharp
+public class Logger
+{
+    public void Log(string message)
+    {
+        // 填寫 Logging 邏輯
+    }
+}
+```
+
+### 5️⃣ 資料設定與對接 (Data Settings & Integration) \[核心欄位]
+
+* 核心欄位對應:
+  | Source | Target | 備註 |
+  |--------|--------|------|
+  | RFID | MaterialRFID | 直接對應 |
+  | WorkOrderID | WorkOrderNumber | 直接對應 |
+  | LotNo | LotID | 直接對應 |
+  | QRCode | ProductNumber | 第4個逗號 |
+  | TagID | MESTagID | 直接對應 |
+  | QRCode | PackingQty | 倒數第3個逗號 |
+
+### 6️⃣ 技術棧與環境設定 (Tech Stack & Config) \[核心 + 進階選項]
+
+* EF Core, SQL Server
+* HttpClient, Polly
+* Serilog
+* 配置: DB Connection String, API URL, Batch size, Timeout, Retry 次數
+
+### 7️⃣ 進階選項 (Optional / Advanced) \[折疊填寫]
+
+* 批次處理: Batch size, Parallelism
+* Logging 細節: Log Level, Log File Path
+* Retry 策略: 次數, Delay, Policy
+* 測試: Unit Test, Mock API, Performance Test
+
+---
+
+💡 **使用說明**:
+
+1. 先填寫核心欄位（需求、流程、角色、角色功能、資料對接）
+2. 可選填進階選項（Batch, Retry, Logging, Test）
+3. 每個角色對應程式 stub 已提供，直接填入欄位映射或邏輯即可
+4. 完成填寫後可快速生成專案骨架

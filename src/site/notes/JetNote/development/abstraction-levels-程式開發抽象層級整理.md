@@ -1,0 +1,50 @@
+---
+{"dg-publish":true,"permalink":"/jet-note/development/abstraction-levels/","title":"程式開發抽象層級整理","tags":["Development"],"dg-note-properties":{"title":"程式開發抽象層級整理","tags":["Development"],"created":"2025-09-09"}}
+---
+
+
+
+# 程式開發抽象層級整理
+
+以下整理了從程式碼最小抽象單位到最大抽象單位的層級、定義、範例及適用場景，可直接貼到 HackMD。
+
+| 層級 | 定義 | 範例 | 適用場景 |
+|------|------|------|----------|
+| **指令 / 表達式** | 最小的執行單位 | `int x = 5 + 3;` | 單一運算或條件判斷 |
+| **函式 / 方法 (Function / Method)** | 抽象單一邏輯或演算法，具可重用性 | `int Add(int a, int b) => a + b;` | 對單一功能進行封裝和重用 |
+| **類別 (Class)** | 聚合多個方法與屬性，形成完整物件抽象 | `public class Calculator { public int Add(int a, int b) => a + b; }` | 對象建模、封裝資料與行為 |
+| **服務 (Service / Component)** | 聚合多個類別或方法，形成一組特定責任範圍的功能模組 | `UserService`, `PrinterService` | 專案內功能整合，常搭配 DI 使用 |
+| **函式庫 / 程式集 (Library / Assembly, DLL)** | 將多個 Service/Class/Function 編譯封裝，供其他專案引用 | `PrinterLibrary.dll` | 專案間引用、程式碼重用 |
+| **NuGet 套件 (Package)** | 封裝 DLL + Metadata（版本、相依性、描述等），提供跨專案/團隊分發 | `Serilog`, `AutoMapper`, 自製 `SBPL Library` | 跨專案、跨團隊共用模組，版本管理 |
+| **框架 (Framework)** | 提供完整開發解決方案與慣例，包含多個模組與工具鏈 | `ASP.NET Core`, `Angular` | 統一專案結構與開發模式，提供開發基礎 |
+| **平台 / 生態系 (Platform / Ecosystem)** | 承載多個框架與工具的完整開發與運行環境 | `.NET`, `Java`, `Node.js` | 整體開發環境與生態，支援多個專案與框架 |
+
+### 圖像化金字塔（Mermaid 版本）
+```mermaid
+flowchart TB
+    A[指令 / 表達式] --> B[函式 / 方法]
+    B --> C[類別 / Class]
+    C --> D[服務 / Service]
+    D --> E[函式庫 / DLL]
+    E --> F[NuGet 套件 / Package]
+    F --> G[框架 / Framework]
+    G --> H[平台 / 生態系 / Platform]
+````
+
+### 程式抽象演進圖（Mermaid 版本）
+
+這個圖展示了從程序化到高階抽象的演進，以及每層解決的核心問題。
+
+# 程式抽象演進表
+
+| 抽象層級 | 定義 | 解決的問題 |
+|-----------|------|------------|
+| 程序化 (Procedural) | 傳統流程式寫法 | - 重複程式碼多<br>- 邏輯散落 |
+| 物件導向 (OOP) | 封裝資料與行為，支持繼承與多型 | - 封裝資料與行為<br>- 減少重複程式碼 |
+| Service / Component | 聚合多個類別或方法，形成特定功能模組 | - 專案內重用<br>- 責任劃分 |
+| DLL / Library | 將多個 Service/Class/Function 編譯封裝成 DLL | - 跨專案重用<br>- 集中管理邏輯 |
+| NuGet 套件 | 封裝 DLL + Metadata，提供跨專案/團隊分發 | - 跨專案/團隊共用<br>- 版本管理 |
+| Framework | 提供完整開發解決方案及慣例 | - 提供完整開發解決方案<br>- 統一開發模式 |
+| Platform / 生態系 | 承載多個框架與工具的完整開發與運行環境 | - 支援多個專案與框架<br>- 統一整個生態系開發環境 |
+
+
