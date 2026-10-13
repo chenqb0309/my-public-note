@@ -144,4 +144,4 @@ Runner 透過 Polling 領取任務，並把 CLI 輸出即時串流回 GitHub 網
 ## 相關連結
 
 * [[JetNote/projects/deployment/cicd-自動化部署核心原理\|cicd-自動化部署核心原理]] — 三大組件、Runner 連線方向、Token 作用域的心智模型
-* [[JetNote/docker/docker-container-host-connectivity-容器與實體主機的三大聯通\|docker-container-host-connectivity-容器與實體主機的三大聯通]]— 若 Runner 以容器形式運行時的聯通觀念
+* [[JetNote/docker/docker-container-host-connectivity-容器與實體主機的三大聯通\|docker-container-host-connectivity-容器與實體主機的三大聯通]] — 若 Runner 以容器形式運行時的聯通觀念

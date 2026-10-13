@@ -126,5 +126,5 @@ Agent Memory（key-value store, ~2K chars）   ← 快取索引層
 ## 七、相關文件
 
 - `meta/agent-memory/spec.md` — Agent Memory 專項規格
-- [[AI 協作範式筆記]] — Harness 協作架構背景
-- [[AI 協作流程與觀念整理]] — 工作流基礎
+- [[AI-collab-paradigm-協作範式筆記]] — Harness 協作架構背景
+- [[AI-collab-flow-協作流程與觀念整理]] — 工作流基礎
