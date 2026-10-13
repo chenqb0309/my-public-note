@@ -67,5 +67,6 @@
 
 ## 相關連結
 
+* [[自建 GitHub Actions Runner 管道搭建（實作篇）\|自建 GitHub Actions Runner 管道搭建（實作篇）]] — 本篇的逐步實作紀錄
 * [[JetNote/projects/deployment/Nginx 零耦合 API 網關與藍綠部署設計理解\|Nginx 零耦合 API 網關與藍綠部署設計理解]] — 部署切流的網關層原理
 * [[JetNote/projects/deployment/Windows Service 部署流程（實務筆記）\|Windows Service 部署流程（實務筆記）]] — Windows 服務的部署實務
