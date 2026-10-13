@@ -126,5 +126,5 @@
 
 ## 相關文件
 
-* [[專案生命週期 Pipeline]] — 七階段操作流程
+* `meta/agent-factory/conventions/pipeline-overview.md` — 七階段操作流程（流程總覽）
 * `~/.hermes/skills/agent-contract/` — Offer ↔ Corer 協作合約

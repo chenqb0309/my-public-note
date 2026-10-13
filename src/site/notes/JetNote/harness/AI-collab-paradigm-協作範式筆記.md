@@ -5,7 +5,7 @@
 
 # AI 協作範式筆記
 
-這份筆記記錄 Offer 與 Jet 對目前 AI 協作模式的理解共識。它不是操作手冊（操作見 [[專案生命週期 Pipeline\|專案生命週期 Pipeline]] 與 agent-contract skill），而是對「我們在做什麼、這是什麼層級的東西」的定位文件。
+這份筆記記錄 Offer 與 Jet 對目前 AI 協作模式的理解共識。它不是操作手冊（操作見 `meta/agent-factory/conventions/pipeline-overview.md` 與 agent-contract skill），而是對「我們在做什麼、這是什麼層級的東西」的定位文件。
 
 ---
 
@@ -142,7 +142,7 @@ Harness 不是一次大爆炸設計出來的，是從真實案例中 extraction 
 
 ## 七、相關文件
 
-- [[專案生命週期 Pipeline]] — 七階段操作流程（需求 → 歸檔）
+- `meta/agent-factory/conventions/pipeline-overview.md` — 七階段操作流程（需求 → 歸檔）
 - `~/.hermes/skills/agent-contract/` — Offer ↔ Corer 協作合約（Kanban 流程、審計協議、Scope 變更協定）
 - `program/` (Obsidian) — 各專案的規格、架構、ADR 與歸檔文件
 - `areas/developer-notes/` — 開發經驗記錄
