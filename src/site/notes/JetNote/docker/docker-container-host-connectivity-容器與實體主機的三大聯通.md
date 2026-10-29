@@ -134,5 +134,5 @@ docker run -d \
 
 ## 相關連結
 
-* [[JetNote/docker/About Docker\|About Docker]] — Docker / Container / Compose 基礎觀念
-* [[JetNote/projects/deployment/Nginx 零耦合 API 網關與藍綠部署設計理解\|Nginx 零耦合 API 網關與藍綠部署設計理解]] — 網關路由與藍綠切換的原理層（本文範例的延伸）
+* [[About Docker]] — Docker / Container / Compose 基礎觀念
+* [[Nginx 零耦合 API 網關與藍綠部署設計理解]] — 網關路由與藍綠切換的原理層（本文範例的延伸）

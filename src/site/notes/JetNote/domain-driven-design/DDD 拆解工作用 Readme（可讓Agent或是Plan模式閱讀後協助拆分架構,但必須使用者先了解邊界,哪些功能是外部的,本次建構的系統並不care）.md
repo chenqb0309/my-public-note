@@ -22,7 +22,7 @@
 * **Event Storming 引導者**：從敘述中找出「發生了什麼事」
 * **DDD 架構拆解者**：將流程轉為 Domain / Application / Infrastructure
 
-⚠️ 限制：
+注意 限制：
 
 * 不要教學
 * 不要解釋名詞定義
@@ -65,9 +65,9 @@
 * Domain Event 清單
 * 命名規則：`<名詞> + <已發生動作>`
 
-❌ 不是 Command
-❌ 不是 API 呼叫
-❌ 不是系統行為描述
+✗ 不是 Command
+✗ 不是 API 呼叫
+✗ 不是系統行為描述
 
 ---
 
@@ -84,7 +84,7 @@
   * Context 名稱（業務語意）
   * 包含哪些 Domain Events
 
-⚠️ 不要嘗試合併成一個大系統
+注意 不要嘗試合併成一個大系統
 
 ---
 
@@ -121,7 +121,7 @@
   * 管理的 Entity
   * 保證的規則
 
-❌ 不允許跨 Aggregate 直接操作
+✗ 不允許跨 Aggregate 直接操作
 
 ---
 

@@ -14,7 +14,7 @@
 | AppService      | 流程編排者            | 組合多個 Domain 行為；決定流程順序；呼叫 Infrastructure  | 負責 orchestration；不封裝狀態規則；只做流程與外部呼叫                                                            |
 | Infrastructure  | 外部世界 / 實際操作者     | DB、設備、API、檔案系統操作                         | 提供介面給 AppService 或 DomainService 呼叫；可被動(event)或主動(function)提供數據；InMemory Repository 可視為內部信息來源 |
 
-💡 **Domain = 業務世界的模型, AppService = 導演, Infrastructure = 物理世界的手**
+ **Domain = 業務世界的模型, AppService = 導演, Infrastructure = 物理世界的手**
 
 ---
 
@@ -130,5 +130,5 @@ public interface IPrinterHardware { Task PrintAsync(string data); }
 
    * 不直接修改 Domain 狀態規則
    * 管理多個 Aggregate / DomainService 呼叫順序
-    
+
 

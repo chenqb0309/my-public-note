@@ -1,16 +1,16 @@
 ---
-{"dg-publish":true,"permalink":"/jet-note/projects/observability/alloy-windows/","title":"🧩 Alloy 在 Windows 環境的安裝與配置筆記","tags":["L-A-G"],"dg-note-properties":{"title":"🧩 Alloy 在 Windows 環境的安裝與配置筆記","tags":["L-A-G"],"created":"2025-10-21"}}
+{"dg-publish":true,"permalink":"/jet-note/projects/observability/alloy-windows/","title":" Alloy 在 Windows 環境的安裝與配置筆記","tags":["L-A-G"],"dg-note-properties":{"title":" Alloy 在 Windows 環境的安裝與配置筆記","tags":["L-A-G"],"created":"2025-10-21"}}
 ---
 
 
-# 🧩 Alloy 在 Windows 環境的安裝與配置筆記
+# Alloy 在 Windows 環境的安裝與配置筆記
 （以實際部署經驗與排錯為基礎）
 
 ---
 
 ## 一、Alloy 安裝概要
 
-### 1️⃣ 安裝方式
+### 1. 安裝方式
 - 下載並執行官方 **Alloy for Windows 安裝包（.msi）**
 - 安裝完成後系統會自動：
   - 將程式放置於：
@@ -34,7 +34,7 @@
 
 ## 二、服務與系統整合
 
-### 1️⃣ Alloy 服務管理
+### 1. Alloy 服務管理
 - 開啟服務管理器：
   ```text
   services.msc
@@ -45,7 +45,7 @@
 * 啟動 / 停止 / 重新啟動 Alloy
 * 確認當前狀態（Running / Stopped）
 
-### 2️⃣ 使用 Regedit 調整 Alloy 設定檔與儲存路徑
+### 2. 使用 Regedit 調整 Alloy 設定檔與儲存路徑
 
 **Registry 路徑：**
 
@@ -83,7 +83,7 @@ C:\Program Files\GrafanaLabs\Alloy\config.alloy
 
 ## 三、設定檔管理與路徑規則
 
-### 1️⃣ 設定檔位置
+### 1. 設定檔位置
 
 ```
 C:\Program Files\GrafanaLabs\Alloy\config.alloy
@@ -91,7 +91,7 @@ C:\Program Files\GrafanaLabs\Alloy\config.alloy
 
 若 Registry 指定自訂路徑，則以該檔為準。
 
-### 2️⃣ 路徑規則
+### 2. 路徑規則
 
 * 使用 `/` 而非 `\`
 * 建議採用絕對路徑
@@ -110,7 +110,7 @@ loki.source.file "logs" {
 
 ## 四、Log 與除錯手段
 
-### 1️⃣ Alloy 執行 Log
+### 1. Alloy 執行 Log
 
 * 查看 Windows 事件檢視器：
 
@@ -121,7 +121,7 @@ loki.source.file "logs" {
   ![image](https://hackmd.io/_uploads/BkzXqsBAxl.png)
 
 
-### 2️⃣ Loki Source 驗證
+### 2. Loki Source 驗證
 
 * 成功運行後，會在指定資料夾建立：
 
@@ -129,7 +129,7 @@ loki.source.file "logs" {
 loki.source.file.log_scrape
 ```
 
-### 3️⃣ Alloy Graph 驗證
+### 3. Alloy Graph 驗證
 
 * 開啟瀏覽器：
 
@@ -148,15 +148,15 @@ http://localhost:12345
 
 ## 五、重啟與除錯流程
 
-1️⃣ 停止服務：
+1. 停止服務：
 
 ```
 services.msc → Grafana Alloy → Stop
 ```
 
-2️⃣ 修改設定檔或 Registry Arguments
-3️⃣ 重新啟動服務
-4️⃣ 驗證：
+2. 修改設定檔或 Registry Arguments
+3. 重新啟動服務
+4. 驗證：
 
 * Event Viewer 無錯誤訊息
 * Graph 顯示正常
@@ -273,21 +273,21 @@ loki.source.file "log_scrape" {
 // loki.process 用於提取日誌中的字段並將其作為標籤添加到 Loki 日誌中
 loki.process "add_label" {
 
-  // 1️⃣ 將多行 JSON log 合併成一筆
+  // 1. 將多行 JSON log 合併成一筆
   // Print { ... } 這種情況需要把多行 JSON 當成一個完整事件
   stage.multiline {
     firstline     = "^[0-9]{4}-[0-9]{2}-[0-9]{2}" // 新 log 開頭為時間戳
     max_wait_time = "2s"
   }
 
-  // 2️⃣ 使用正則表達式解析一般 Serilog 格式的 log
+  // 2. 使用正則表達式解析一般 Serilog 格式的 log
   // 若匹配不到（例如 Print { ... } JSON 格式），此 stage 不會丟錯，只是無法建立命名組
   stage.regex {
     expression = "^\\[(?P<timestamp>\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?:\\s+[+-]\\d{2}:\\d{2})?\\s+(?P<level>[A-Z]+)\\]\\s+(?P<category>[^:]+):\\s+(?P<message>.*)$"
   }
 
 
-  // 3️⃣ 嘗試解析 JSON 格式的 log
+  // 3. 嘗試解析 JSON 格式的 log
   // 如果 message 含 JSON 內容，就能提取欄位；否則這步會自動略過
   /*stage.json {
     source = "message"
@@ -302,13 +302,13 @@ loki.process "add_label" {
     }
   }*/
 
-  // 4️⃣ level 正規化（保持你原有 template 機制）
+  // 4. level 正規化（保持你原有 template 機制）
   stage.template {
     source   = "level"
     template = "{{ .Value | replace \"ERR\" \"error\" | replace \"DBG\" \"debug\" | replace \"INF\" \"info\" | replace \"WRN\" \"warning\" | replace \"FTL\" \"fatal\" }}"
   }
 
-  // 5️⃣ 統一輸出為 Loki 標籤
+  // 5. 統一輸出為 Loki 標籤
   stage.labels {
     values = {
       timestamp = "timestamp",
@@ -345,21 +345,21 @@ loki.source.file "log_scrape2" {
 // loki.process 用於提取日誌中的字段並將其作為標籤添加到 Loki 日誌中
 loki.process "add_label2" {
 
-  // 1️⃣ 將多行 JSON log 合併成一筆
+  // 1. 將多行 JSON log 合併成一筆
   // Print { ... } 這種情況需要把多行 JSON 當成一個完整事件
   stage.multiline {
     firstline     = "^[0-9]{4}-[0-9]{2}-[0-9]{2}" // 新 log 開頭為時間戳
     max_wait_time = "2s"
   }
 
-  // 2️⃣ 使用正則表達式解析一般 Serilog 格式的 log
+  // 2. 使用正則表達式解析一般 Serilog 格式的 log
   // 若匹配不到（例如 Print { ... } JSON 格式），此 stage 不會丟錯，只是無法建立命名組
   stage.regex {
     expression = "^\\[(?P<timestamp>\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?:\\s+[+-]\\d{2}:\\d{2})?\\s+(?P<level>[A-Z]+)\\]\\s+(?P<category>[^:]+):\\s+(?P<message>.*)$"
   }
 
 
-  // 3️⃣ 嘗試解析 JSON 格式的 log
+  // 3. 嘗試解析 JSON 格式的 log
   // 如果 message 含 JSON 內容，就能提取欄位；否則這步會自動略過
   /*stage.json {
     source = "message"
@@ -374,13 +374,13 @@ loki.process "add_label2" {
     }
   }*/
 
-  // 4️⃣ level 正規化（保持你原有 template 機制）
+  // 4. level 正規化（保持你原有 template 機制）
   stage.template {
     source   = "level"
     template = "{{ .Value | replace \"ERR\" \"error\" | replace \"DBG\" \"debug\" | replace \"INF\" \"info\" | replace \"WRN\" \"warning\" | replace \"FTL\" \"fatal\" }}"
   }
 
-  // 5️⃣ 統一輸出為 Loki 標籤
+  // 5. 統一輸出為 Loki 標籤
   stage.labels {
     values = {
       timestamp = "timestamp",

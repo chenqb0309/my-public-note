@@ -5,7 +5,7 @@
 
 # JetNote
 
-Jet 的技術筆記 — .NET、DDD、AI Agent、系統設計
+Jet 的技術筆記 — .NET、DDD、AI Agent、系統設計、思考方法
 
 這裡整理了我在軟體開發與 AI 工程上的學習筆記，內容涵蓋：
 
@@ -18,5 +18,6 @@ Jet 的技術筆記 — .NET、DDD、AI Agent、系統設計
 - **可觀測性** — Prometheus + Grafana、Alloy、PLAG 架構
 - **Docker** — 容器化基礎筆記
 - **專案實戰** — 部署流程、Nginx 網關與藍綠部署、Windows Service、Radzen + Blazor
+- **思考方法（thinking）** — 心智模型與決策品質：AI 的認知風險與判準、決策前的規則預先承諾、放棄前的檢查
 
 請使用左側檔案樹瀏覽各分類。

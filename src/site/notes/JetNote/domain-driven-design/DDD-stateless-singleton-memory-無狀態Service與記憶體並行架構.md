@@ -56,7 +56,7 @@
 只有當「兩個 Thread 試圖同時修改 Heap 裡同一份共享資料」時才會衝突或需要鎖定。
 
 ```java
-// ❌ 陷阱 A：共享可變成員變數
+// ✗ 陷阱 A：共享可變成員變數
 public class OrderService {
     private String currentUserId; // 共享變數！Thread A 寫入後可能被 Thread B 蓋掉
     public void processOrder(OrderRequest req) {
@@ -67,7 +67,7 @@ public class OrderService {
 ```
 
 ```java
-// ❌ 陷阱 B：加鎖強制排隊
+// ✗ 陷阱 B：加鎖強制排隊
 public synchronized void processOrder(OrderRequest req) { ... }
 // synchronized / Lock 會讓所有請求強行排隊
 ```
@@ -152,6 +152,6 @@ public class OrderApplicationService {
 
 ## 延伸閱讀
 
-- [[JetNote/dotnet/執行緒、資源、控制權、Task 的完整整理\|執行緒、資源、控制權、Task 的完整整理]]
-- [[JetNote/domain-driven-design/DDD AppService Domain Infrastructure 筆記與流程圖\|DDD AppService Domain Infrastructure 筆記與流程圖]]
-- [[JetNote/dotnet/📌 SignalR × Event-Driven × DDD 總結筆記\|📌 SignalR × Event-Driven × DDD 總結筆記]]
+- [[執行緒、資源、控制權、Task 的完整整理]]
+- [[DDD AppService Domain Infrastructure 筆記與流程圖]]
+- [[ SignalR × Event-Driven × DDD 總結筆記]]

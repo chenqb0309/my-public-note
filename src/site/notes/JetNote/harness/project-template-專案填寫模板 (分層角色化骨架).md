@@ -5,7 +5,7 @@
 
 # 專案填寫模板 (分層角色化骨架)
 
-### 1️⃣ 界定需求 (Define Requirements) \[核心欄位]
+### 1. 界定需求 (Define Requirements) \[核心欄位]
 
 * **專案目標**:
 
@@ -16,7 +16,7 @@
   * Source: RFIDMappingData (DB Table)
   * Target: MES API / MaterialRFIDProfile
 
-### 2️⃣ 流程規劃 (Process Flow) \[核心欄位]
+### 2. 流程規劃 (Process Flow) \[核心欄位]
 
 * **線性流程**:
 
@@ -26,7 +26,7 @@
   4. Logging & Exception handling
   5. 驗證與回饋
 
-### 3️⃣ 角色劃分 (Roles) \[核心欄位]
+### 3. 角色劃分 (Roles) \[核心欄位]
 
 | 角色              | 職責     | 輸入                    | 輸出                    |
 | --------------- | ------ | --------------------- | --------------------- |
@@ -35,7 +35,7 @@
 | TransferService | 呼叫 API | MaterialRFIDProfile   | 成功/失敗狀態               |
 | Logger          | 記錄資訊   | 任何流程節點                | Log Entry             |
 
-### 4️⃣ 角色功能 (Role Functions) \[核心欄位]
+### 4. 角色功能 (Role Functions) \[核心欄位]
 
 #### DataFetcher
 
@@ -101,7 +101,7 @@ public class Logger
 }
 ```
 
-### 5️⃣ 資料設定與對接 (Data Settings & Integration) \[核心欄位]
+### 5. 資料設定與對接 (Data Settings & Integration) \[核心欄位]
 
 * 核心欄位對應:
   | Source | Target | 備註 |
@@ -113,14 +113,14 @@ public class Logger
   | TagID | MESTagID | 直接對應 |
   | QRCode | PackingQty | 倒數第3個逗號 |
 
-### 6️⃣ 技術棧與環境設定 (Tech Stack & Config) \[核心 + 進階選項]
+### 6. 技術棧與環境設定 (Tech Stack & Config) \[核心 + 進階選項]
 
 * EF Core, SQL Server
 * HttpClient, Polly
 * Serilog
 * 配置: DB Connection String, API URL, Batch size, Timeout, Retry 次數
 
-### 7️⃣ 進階選項 (Optional / Advanced) \[折疊填寫]
+### 7. 進階選項 (Optional / Advanced) \[折疊填寫]
 
 * 批次處理: Batch size, Parallelism
 * Logging 細節: Log Level, Log File Path
@@ -129,7 +129,7 @@ public class Logger
 
 ---
 
-💡 **使用說明**:
+ **使用說明**:
 
 1. 先填寫核心欄位（需求、流程、角色、角色功能、資料對接）
 2. 可選填進階選項（Batch, Retry, Logging, Test）

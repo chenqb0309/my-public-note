@@ -95,7 +95,7 @@ System Event ─────┘
 
 ## 三、與三層強制模型的對應
 
-此模型與 [[JetNote/harness/🔷 AI Agent 協作邊界筆記#一、三層強制模型\|🔷 AI Agent 協作邊界筆記#一、三層強制模型]] 的對照：
+此模型與 [[🔷 AI Agent 協作邊界筆記#一、三層強制模型]] 的對照：
 
 ### 橫向視角（控制面 — 既有內容）
 
@@ -159,7 +159,7 @@ Processor 是非確定性元件。沒有 logging / tracing 的 Processor 等於�
 | Output | Structure valid, fallback triggered |
 | Side effect | Tool call success/fail, DB write ok |
 
-對應到 [[JetNote/harness/🔷 AI Agent 協作邊界筆記#四 3 靜默失敗比錯誤更危險\|🔷 AI Agent 協作邊界筆記#四 3 靜默失敗比錯誤更危險]]：每個生命週期都要有可查詢狀態。
+對應到 [[🔷 AI Agent 協作邊界筆記#四 3 靜默失敗比錯誤更危險]]：每個生命週期都要有可查詢狀態。
 
 ### 4.4 Processor 的複雜度由 Input Schema 管理
 

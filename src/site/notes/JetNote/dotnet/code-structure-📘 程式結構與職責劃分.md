@@ -1,9 +1,9 @@
 ---
-{"dg-publish":true,"permalink":"/jet-note/dotnet/code-structure/","title":"📘 程式結構與職責劃分","tags":[".Net"],"dg-note-properties":{"title":"📘 程式結構與職責劃分","tags":[".Net"],"created":"2025-04-21"}}
+{"dg-publish":true,"permalink":"/jet-note/dotnet/code-structure/","title":" 程式結構與職責劃分","tags":[".Net"],"dg-note-properties":{"title":" 程式結構與職責劃分","tags":[".Net"],"created":"2025-04-21"}}
 ---
 
 
-# 📘 程式結構與職責劃分
+# 程式結構與職責劃分
 
 筆記目的是提升系統的可維護性、測試便利性，以及團隊協作效率。
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 🔹 功能層級與責任歸屬
+## 功能層級與責任歸屬
 
 | 層級                              | 功能說明                               | 範例檔案                                           |
 | ------------------------------- | ---------------------------------- | ---------------------------------------------- |
@@ -23,7 +23,7 @@
 
 ---
 
-## ✅ BaseService
+## ✓ BaseService
 
 > 功能：與外部系統或資料來源整合，**僅提供資料操作，不含判斷或流程邏輯**。
 
@@ -47,14 +47,14 @@ public interface IDatabaseClient
 }
 ```
 
-### ❗ Try-Catch 應視呼叫上下文決定
+### Try-Catch 應視呼叫上下文決定
 
 * **若為 private function 且有明確處理意圖，可在內部使用 try-catch。**
 * **若為 public function，應避免吞錯（swallow），讓調用者依責任層級處理。**
 
 ---
 
-## ✅ AppService
+## ✓ AppService
 
 > 功能：實作特定業務功能，整合多個 BaseService 並處理邏輯。
 
@@ -102,7 +102,7 @@ public class WorkOrderService
 
 ---
 
-## ✅ Process 編排層
+## ✓ Process 編排層
 
 > 功能：實作跨模組流程的編排，例如：當水分超標 → 停止裝載機 → 發送通知。
 
@@ -147,7 +147,7 @@ public class LoaderProcess
 
 ---
 
-## ✅ Worker / BackgroundTasks
+## ✓ Worker / BackgroundTasks
 
 > 功能：流程的啟動點，定時或事件驅動的任務管理。
 
@@ -164,7 +164,7 @@ public class LoaderProcess
 
 ---
 
-## ✅ 應用邊界（Application Boundary）
+## ✓ 應用邊界（Application Boundary）
 
 > 功能：處理來自外部系統或使用者的請求，是「系統邏輯的進入點」。
 
@@ -206,7 +206,7 @@ public class GlobalExceptionMiddleware
 
 ---
 
-## 📌 設計原則重點
+## 設計原則重點
 
 | 層級           | 職責摘要                 |
 | ------------ | -------------------- |
@@ -216,11 +216,11 @@ public class GlobalExceptionMiddleware
 | Worker       | 程式啟動點，定時執行流程或監聽事件    |
 | App Boundary | 集中處理輸入驗證、錯誤攔截與格式轉換   |
 
-> ✅ 重點不是名字叫什麼，而是「誰應該負責什麼邏輯」。
+> ✓ 重點不是名字叫什麼，而是「誰應該負責什麼邏輯」。
 
 ---
 
-## 📂 建議目錄結構
+## 建議目錄結構
 
 ```
 /src
@@ -237,4 +237,4 @@ public class GlobalExceptionMiddleware
 
 ---
 
-> 📌 分層目的是讓每個模組「只負責它該負責的事」，讓整體系統更穩定、容易擴充與維護。
+>  分層目的是讓每個模組「只負責它該負責的事」，讓整體系統更穩定、容易擴充與維護。

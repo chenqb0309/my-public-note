@@ -1,9 +1,9 @@
 ---
-{"dg-publish":true,"permalink":"/jet-note/harness/ai-agent/","title":"🔷 AI Agent 協作邊界筆記","tags":["AI-Agent","Prompt-Engineering","System-Design"],"dg-note-properties":{"title":"🔷 AI Agent 協作邊界筆記","tags":["AI-Agent","Prompt-Engineering","System-Design"],"created":"2026-06-26"}}
+{"dg-publish":true,"permalink":"/jet-note/harness/ai-agent/","title":" AI Agent 協作邊界筆記","tags":["AI-Agent","Prompt-Engineering","System-Design"],"dg-note-properties":{"title":" AI Agent 協作邊界筆記","tags":["AI-Agent","Prompt-Engineering","System-Design"],"created":"2026-06-26"}}
 ---
 
 
-# 🔷 AI Agent 協作邊界筆記
+# AI Agent 協作邊界筆記
 
 > 從 Capsules / mem0 / Claude Code 實作經驗提煉，跨專案通用。
 > 核心命題：AI 不可信任，但其行為可引導；不可強制，但其路徑可約束。
@@ -143,7 +143,7 @@ sequenceDiagram
     participant Read as 讀路徑（sync）
 
     Note over User,Read: 讀路徑：用戶在等，零 LLM
-    
+
     User->>Agent: 提問
     Agent->>Read: 搜尋相關經驗
     Read-->>Agent: 結果（~150ms）

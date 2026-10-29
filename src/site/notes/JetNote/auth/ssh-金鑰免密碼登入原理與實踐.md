@@ -148,4 +148,4 @@ ls -ld ~/.ssh && ls -l ~/.ssh/authorized_keys
 
 ## 相關連結
 
-* [[JetNote/auth/內網 IoT 認證與加密筆記\|內網 IoT 認證與加密筆記]] — 應用層認證（HTTPS/TLS、JWT、API Key、Authorize）
+* [[內網 IoT 認證與加密筆記]] — 應用層認證（HTTPS/TLS、JWT、API Key、Authorize）

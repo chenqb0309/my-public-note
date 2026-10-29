@@ -1,9 +1,9 @@
 ---
-{"dg-publish":true,"permalink":"/jet-note/projects/radzen-blazor-server/","title":"📘 Radzen + Blazor Server 前端樞構筆記（最小可用框架）","tags":["Blazor","Radzen","UI","ASP.NET-Core"],"dg-note-properties":{"title":"📘 Radzen + Blazor Server 前端樞構筆記（最小可用框架）","tags":["Blazor","Radzen","UI","ASP.NET-Core"],"created":"2025-08-06"}}
+{"dg-publish":true,"permalink":"/jet-note/projects/radzen-blazor-server/","title":" Radzen + Blazor Server 前端樞構筆記（最小可用框架）","tags":["Blazor","Radzen","UI","ASP.NET-Core"],"dg-note-properties":{"title":" Radzen + Blazor Server 前端樞構筆記（最小可用框架）","tags":["Blazor","Radzen","UI","ASP.NET-Core"],"created":"2025-08-06"}}
 ---
 
 
-# 📘 Radzen + Blazor Server 前端樞構筆記（最小可用框架）
+# Radzen + Blazor Server 前端樞構筆記（最小可用框架）
 
 ---
 
