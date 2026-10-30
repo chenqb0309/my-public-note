@@ -5,12 +5,12 @@
 
 # DDD 聚合根设计心得
 
-> 基于 InboundHandling 项目添加 JobId 字段的实践总结
+> 基于 InboundHandling 项目添加 JobId 字段的实践总结  
 > 日期: 2026-03-04
 
 ---
 
-## 核心发现
+## 💡 核心发现
 
 ### 为什么所有操作都要通过聚合根？
 
@@ -23,7 +23,7 @@
 CarrierPickedEventArgs {
   StationId    // ← 来自 Station (聚合根)
   VehicleId    // ← 来自 Vehicle (子实体)
-  JobId        // ← 来自 Vehicle.JobId (子实体属性)  本次新增
+  JobId        // ← 来自 Vehicle.JobId (子实体属性) ⭐ 本次新增
   CarrierId    // ← 来自 Carrier (孙实体)
   Floor        // ← 方法参数
 }
@@ -32,15 +32,15 @@ CarrierPickedEventArgs {
 **如果在子实体触发事件会怎样？**
 
 ```csharp
-// ✗ 反模式：Carrier 自己触发事件
-public class Carrier
+// ❌ 反模式：Carrier 自己触发事件
+public class Carrier 
 {
   public void MarkAsPicked()
   {
     // 问题 1: JobId 在哪？需要问 Vehicle
     // 问题 2: VehicleId 在哪？需要知道我属于哪个 Vehicle
     // 问题 3: StationId 在哪？需要知道 Vehicle 在哪个 Station
-
+    
     // 结果：被迫反向依赖父级实体，违反 DDD 原则
   }
 }
@@ -48,7 +48,7 @@ public class Carrier
 
 ---
 
-## 聚合根三大职责
+## 🎯 聚合根三大职责
 
 ### 1. 完整上下文的拥有者
 
@@ -56,12 +56,12 @@ public class Carrier
 public class Station  // 聚合根
 {
   private Vehicle? _currentVehicle;  // 持有子实体引用
-
+  
   public async Task<Carrier> PickCarrierAsync(int floor)
   {
-    // ✓ 可以访问所有层级的信息
+    // ✅ 可以访问所有层级的信息
     var carrier = _currentVehicle.PickCarrier(floor);
-
+    
     CarrierPicked?.Invoke(this, new CarrierPickedEventArgs
     {
       StationId = Id,                    // 自己的属性
@@ -87,7 +87,7 @@ public async Task<Carrier> PickCarrierAsync(int floor)
     // 验证不变量
     if (_currentVehicle == null)
       throw new InvalidOperationException($"站點 {Id} 沒有車輛");
-
+    
     // 执行操作...
   }
   finally
@@ -105,26 +105,26 @@ public async Task<Carrier> PickCarrierAsync(int floor)
 ### 3. 对外的唯一入口
 
 ```
-✓ 正确调用链：
+✅ 正确调用链：
 Controller → StationManager → Station.PickCarrierAsync()
 
-✗ 禁止的访问：
+❌ 禁止的访问：
 Controller → Vehicle.PickCarrier()  // 跳过聚合根
 Controller → Carrier.DoSomething()  // 直接访问孙实体
 ```
 
 ---
 
-## 避免向上依赖的原因
+## 🚫 避免向上依赖的原因
 
 ### 问题 1：破坏封装
 
 ```csharp
-// ✗ 反模式
+// ❌ 反模式
 public class Carrier
 {
   private Vehicle _parentVehicle;  // 持有父实体引用
-
+  
   public void DoSomething()
   {
     var jobId = _parentVehicle.JobId;  // 向上依赖
@@ -174,7 +174,7 @@ public async Task<Carrier> PickCarrierAsync(int floor)
 
 ---
 
-## 设计模式：委派 + 协调
+## 📐 设计模式：委派 + 协调
 
 ### 正确的协作模式
 
@@ -184,7 +184,7 @@ public Carrier PickCarrier(int floor)
 {
   if (!_carriers.ContainsKey(floor))
     throw new InvalidOperationException($"第 {floor} 層沒有載具");
-
+  
   var carrier = _carriers[floor];
   _carriers.Remove(floor);
   return carrier;  // 只返回结果，不触发事件
@@ -198,18 +198,18 @@ public async Task<Carrier> PickCarrierAsync(int floor)
   {
     // 1. 委派业务逻辑给子实体
     var carrier = _currentVehicle.PickCarrier(floor);
-
+    
     // 2. 聚合根负责事件（因为需要完整上下文）
     CarrierPicked?.Invoke(this, new CarrierPickedEventArgs
     {
       StationId = Id,
       VehicleId = _currentVehicle.Id,
-      JobId = _currentVehicle.JobId,  //  只有这里能拿到
+      JobId = _currentVehicle.JobId,  // ⭐ 只有这里能拿到
       CarrierId = carrier.Id,
       Floor = floor,
       PickedAt = DateTime.Now
     });
-
+    
     return carrier;
   }
   finally
@@ -223,7 +223,7 @@ public async Task<Carrier> PickCarrierAsync(int floor)
 
 ---
 
-## 本次实践：添加 JobId 的完整链路
+## 🔍 本次实践：添加 JobId 的完整链路
 
 ### 需求
 为车辆到达和载具取出记录添加 `JobId`，实现 Job → Dispatch → Arrival → Pick 的完整追溯
@@ -235,7 +235,7 @@ public async Task<Carrier> PickCarrierAsync(int floor)
 // CarrierPickedEventArgs
 public string? JobId { get; init; }  // ← 新增
 
-// VehicleArrivedEventArgs
+// VehicleArrivedEventArgs  
 public string? JobId { get; init; }  // ← 新增
 ```
 
@@ -246,7 +246,7 @@ CarrierPicked?.Invoke(this, new CarrierPickedEventArgs
 {
   StationId = Id,
   VehicleId = _currentVehicle.Id,
-  JobId = _currentVehicle.JobId,  //  从 Vehicle 获取
+  JobId = _currentVehicle.JobId,  // ⭐ 从 Vehicle 获取
   CarrierId = carrier.Id,
   Floor = floor,
   PickedAt = DateTime.Now
@@ -257,7 +257,7 @@ VehicleArrived?.Invoke(this, new VehicleArrivedEventArgs
 {
   StationId = Id,
   VehicleId = vehicleId,
-  JobId = jobId,  //  从方法参数传入
+  JobId = jobId,  // ⭐ 从方法参数传入
   CarrierCount = carriers.Count,
   ArrivedAt = DateTime.Now
 });
@@ -272,9 +272,9 @@ public string? JobId { get; init; }  // ← 新增
 public string? JobId { get; init; }  // ← 新增
 
 // MssqlStateStore - SaveCarrierPickEventAsync
-INSERT INTO [dbo].[InboundCarrierPicks]
+INSERT INTO [dbo].[InboundCarrierPicks] 
   ([StationId], [VehicleId], [JobId], [CarrierId], [Floor], [PickedAt])
-VALUES
+VALUES 
   (@StationId, @VehicleId, @JobId, @CarrierId, @Floor, @PickedAt)
 ```
 
@@ -284,14 +284,14 @@ VALUES
 ALTER TABLE [dbo].[InboundCarrierPicks]
 ADD [JobId] NVARCHAR(50) NULL
 
-CREATE NONCLUSTERED INDEX [IX_InboundCarrierPicks_JobId]
+CREATE NONCLUSTERED INDEX [IX_InboundCarrierPicks_JobId] 
   ON [dbo].[InboundCarrierPicks] ([JobId])
 
 -- InboundVehicleArrivals
 ALTER TABLE [dbo].[InboundVehicleArrivals]
 ADD [JobId] NVARCHAR(50) NULL
 
-CREATE NONCLUSTERED INDEX [IX_InboundVehicleArrivals_JobId]
+CREATE NONCLUSTERED INDEX [IX_InboundVehicleArrivals_JobId] 
   ON [dbo].[InboundVehicleArrivals] ([JobId])
 ```
 
@@ -302,7 +302,7 @@ await _stateStore.SaveCarrierPickEventAsync(new CarrierPickRecord
 {
   StationId = e.StationId,
   VehicleId = e.VehicleId,
-  JobId = e.JobId,  //  从事件参数获取
+  JobId = e.JobId,  // ⭐ 从事件参数获取
   CarrierId = e.CarrierId,
   Floor = e.Floor,
   PickedAt = e.PickedAt
@@ -324,7 +324,7 @@ Station.AddVehicleAsync(vehicleId, carriers, jobId)
 Station.PickCarrierAsync(floor)
   ↓ _currentVehicle.PickCarrier(floor)  // 委派业务逻辑
   ↓ CarrierPicked 事件触发
-  ↓ 事件参数包含 _currentVehicle.JobId  //  只有 Station 能获取
+  ↓ 事件参数包含 _currentVehicle.JobId  // ⭐ 只有 Station 能获取
   ↓
 StationEventHandler.OnCarrierPicked(sender, e)
   ↓ e.JobId 持久化到数据库
@@ -338,12 +338,12 @@ StationEventHandler.OnCarrierPicked(sender, e)
 
 ---
 
-## 数据完整性的价值
+## 📊 数据完整性的价值
 
 ### 修改前：数据链断裂
 
 ```
-DispatchRecord (JobId) → ✗ VehicleArrival (无 JobId) → ✗ CarrierPick (无 JobId)
+DispatchRecord (JobId) → ❌ VehicleArrival (无 JobId) → ❌ CarrierPick (无 JobId)
 ```
 
 **无法回答的问题：**
@@ -361,7 +361,7 @@ DispatchRecord (JobId) → VehicleArrival (JobId) → CarrierPick (JobId)
 **可以实现的分析：**
 ```sql
 -- Job 端到端性能分析
-SELECT
+SELECT 
   d.JobId,
   d.CreatedAt AS DispatchTime,
   v.ArrivedAt AS ArrivalTime,
@@ -377,7 +377,7 @@ WHERE d.CreatedAt >= DATEADD(DAY, -7, GETDATE())
 GROUP BY d.JobId, d.CreatedAt, v.ArrivedAt
 
 -- Station 按 Job 类型的负载分析
-SELECT
+SELECT 
   StationId,
   COUNT(DISTINCT JobId) AS UniqueJobs,
   COUNT(*) AS TotalPicks,
@@ -405,8 +405,8 @@ GROUP BY StationId
 
 ### 口诀 3：依赖方向
 ```
-聚合根 → 子实体 → 孙实体  ✓
-子实体 → 聚合根              ✗ 反模式
+聚合根 → 子实体 → 孙实体  ✅
+子实体 → 聚合根              ❌ 反模式
 ```
 
 ### 口诀 4：职责分离
@@ -421,7 +421,7 @@ GROUP BY StationId
 - [ ] 这个操作需要触发包含跨层级数据的事件吗？→ 放聚合根
 - [ ] 这个操作需要维护跨实体的不变量吗？→ 放聚合根
 - [ ] 这个操作只修改单个实体内部状态吗？→ 可以在实体内实现
-- [ ] 子实体是否需要父实体的引用？→ ✗ 重新设计
+- [ ] 子实体是否需要父实体的引用？→ ❌ 重新设计
 
 ---
 
@@ -460,7 +460,7 @@ DispatchScheduler (Aggregate Root)
 
 ---
 
-## 实际编码经验
+## 🔧 实际编码经验
 
 ### 编写聚合根方法的模板
 
@@ -473,10 +473,10 @@ public async Task<TResult> DoSomethingAsync(TParam param)
     // 2. 验证前置条件和不变量
     if (/* 不满足条件 */)
       throw new InvalidOperationException("...");
-
+    
     // 3. 委派业务逻辑给子实体
     var result = _childEntity.DoBusinessLogic(param);
-
+    
     // 4. 触发领域事件（完整上下文）
     SomethingHappened?.Invoke(this, new SomethingEventArgs
     {
@@ -485,7 +485,7 @@ public async Task<TResult> DoSomethingAsync(TParam param)
       ResultData = result,            // 操作结果
       Timestamp = DateTime.Now        // 时间戳
     });
-
+    
     // 5. 返回结果
     return result;
   }
@@ -498,17 +498,17 @@ public async Task<TResult> DoSomethingAsync(TParam param)
 
 ### 常见错误
 
-#### ✗ 错误 1：在子实体触发需要上下文的事件
+#### ❌ 错误 1：在子实体触发需要上下文的事件
 ```csharp
 public class Vehicle
 {
   public event EventHandler<SomeEvent>? SomethingHappened;
-
+  
   public Carrier PickCarrier(int floor)
   {
     var carrier = _carriers[floor];
-
-    // ✗ 错误：我不知道 StationId
+    
+    // ❌ 错误：我不知道 StationId
     SomethingHappened?.Invoke(this, new SomeEvent
     {
       StationId = ???,  // 我不知道
@@ -518,12 +518,12 @@ public class Vehicle
 }
 ```
 
-#### ✗ 错误 2：子实体持有父实体引用
+#### ❌ 错误 2：子实体持有父实体引用
 ```csharp
 public class Vehicle
 {
-  private Station _station;  // ✗ 反向依赖
-
+  private Station _station;  // ❌ 反向依赖
+  
   public Vehicle(Station station, ...)
   {
     _station = station;
@@ -531,19 +531,19 @@ public class Vehicle
 }
 ```
 
-#### ✗ 错误 3：外部直接访问子实体
+#### ❌ 错误 3：外部直接访问子实体
 ```csharp
 // Controller 中
 var station = await stationManager.GetStation(stationId);
 var vehicle = await station.GetCurrentVehicleAsync();
-var carrier = vehicle.PickCarrier(floor);  // ✗ 跳过聚合根
+var carrier = vehicle.PickCarrier(floor);  // ❌ 跳过聚合根
 ```
 
-#### ✓ 正确做法
+#### ✅ 正确做法
 ```csharp
 // Controller 中
 var station = await stationManager.GetStation(stationId);
-var carrier = await station.PickCarrierAsync(floor);  // ✓ 通过聚合根
+var carrier = await station.PickCarrierAsync(floor);  // ✅ 通过聚合根
 ```
 
 ---
@@ -553,7 +553,7 @@ var carrier = await station.PickCarrierAsync(floor);  // ✓ 通过聚合根
 ### 核心洞察
 
 **聚合根模式的本质：**
-> 在复杂的对象图中，聚合根是唯一拥有完整视角的协调者。
+> 在复杂的对象图中，聚合根是唯一拥有完整视角的协调者。  
 > 子实体只关心自己的业务逻辑，聚合根负责编排和提供上下文。
 
 ### 本次实践的价值
@@ -574,10 +574,10 @@ var carrier = await station.PickCarrierAsync(floor);  // ✓ 通过聚合根
 **单向依赖原则：**
 ```
 外部 → 聚合根 → 子实体 → 孙实体
-     ✓       ✓        ✓
-
+     ✅       ✅        ✅
+     
 外部 ← 聚合根 ← 子实体 ← 孙实体
-     ✗       ✗        ✗
+     ❌       ❌        ❌
 ```
 
 ---

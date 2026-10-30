@@ -15,7 +15,7 @@
 不要死背下載網址與認證金鑰。GitHub 會依你的平台與架構，自動生成一份含**最新穩定版本號**與**專屬 Token 語法**的指令懶人包：
 
 1. 進入 GitHub 專案倉庫（Repository）。
-2. 導覽列點 **Settings** → 左側 **Actions** → 展開 **Runners**。
+2. 導覽列點 **Settings** ➡️ 左側 **Actions** ➡️ 展開 **Runners**。
 3. 點右上角藍色按鈕 **New self-hosted runner**。
 4. 平台選 **Linux**、架構選 **X64**（依伺服器硬體而定），下方即生成步驟 2、3 的精準指令。
 
@@ -63,7 +63,7 @@ tar -xzf ./actions-runner-linux-x64.tar.gz
 | `Enter name of labels` | 標籤（預設 `self-hosted,Linux,X64`） |
 | `Enter name of work folder` | 工作目錄（預設 `_work`） |
 
-> 注意 **Token 是一次性且有時效**（約 1 小時）。過期或重複使用會失敗，需回步驟 0 面板重新產生。
+> ⚠️ **Token 是一次性且有時效**（約 1 小時）。過期或重複使用會失敗，需回步驟 0 面板重新產生。
 
 ---
 
@@ -75,7 +75,7 @@ tar -xzf ./actions-runner-linux-x64.tar.gz
 # 1. 登記註冊：以管理員權限將 Runner 寫入系統服務清單
 sudo ./svc.sh install
 
-# 2. 正式開工：背景啟動服務。此時 GitHub 面板的 Runner 狀態會亮起 低 Idle
+# 2. 正式開工：背景啟動服務。此時 GitHub 面板的 Runner 狀態會亮起 🟢 Idle
 sudo ./svc.sh start
 ```
 
@@ -124,7 +124,7 @@ git push origin main
 
 Runner 透過 Polling 領取任務，並把 CLI 輸出即時串流回 GitHub 網頁。
 
-**驗收**：GitHub 專案網頁 → **Actions** → 點進 `deploy-and-switch` 工作 → 展開步驟 2，即可看到 Linux 實體機背景印出的 CLI 日誌。
+**驗收**：GitHub 專案網頁 ➡️ **Actions** ➡️ 點進 `deploy-and-switch` 工作 ➡️ 展開步驟 2，即可看到 Linux 實體機背景印出的 CLI 日誌。
 
 ---
 

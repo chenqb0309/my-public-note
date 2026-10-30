@@ -51,7 +51,7 @@ app.MapMetrics(); // 預設 http://localhost:5000/metrics
 
 ```csharp
 private static readonly Gauge TemperatureGauge =
-    Metrics.CreateGauge("device_temperature_celsius", "Temperature",
+    Metrics.CreateGauge("device_temperature_celsius", "Temperature", 
         new GaugeConfiguration { LabelNames = new[] { "device_id", "device_ip" } });
 
 TemperatureGauge.WithLabels("sensor1", "10.0.0.10").Set(28.5);
@@ -59,8 +59,8 @@ TemperatureGauge.WithLabels("sensor1", "10.0.0.10").Set(28.5);
 
 ### 誤區修正
 
-* ✗ 以為 `9090/metrics` 應該顯示自定義數據
-* ✓ 實際上要看 `5000/metrics`（應用程式輸出），Prometheus 只是抓取並存儲
+* ❌ 以為 `9090/metrics` 應該顯示自定義數據
+* ✅ 實際上要看 `5000/metrics`（應用程式輸出），Prometheus 只是抓取並存儲
 
 ---
 
@@ -80,8 +80,8 @@ scrape_configs:
 
 ### 誤區修正
 
-* ✗ 嘗試修改容器內的 prometheus.yml
-* ✓ 正確做法：建立本地 YAML 檔，掛載進容器 (-v)
+* ❌ 嘗試修改容器內的 prometheus.yml
+* ✅ 正確做法：建立本地 YAML 檔，掛載進容器 (-v)
 
 ### 確認狀態
 

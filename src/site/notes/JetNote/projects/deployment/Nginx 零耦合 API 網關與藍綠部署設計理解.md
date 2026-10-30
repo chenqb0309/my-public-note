@@ -190,4 +190,4 @@ worker_shutdown_timeout 30s;   # 逾時後強制結束舊 worker
 
 ## 相關連結
 
-* [[JetNote/projects/ai/AgentGateway-AgentBot-技術筆記\|AgentGateway-AgentBot-技術筆記]] — 應用層 API Gateway（FastEndpoints），對照本文的基礎設施層網關（Nginx）
+* [[AgentGateway-AgentBot-技術筆記]] — 應用層 API Gateway（FastEndpoints），對照本文的基礎設施層網關（Nginx）

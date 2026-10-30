@@ -108,8 +108,8 @@ var fields = DbService.ParseFields(req.Fields, AllowedColumns);
 OpenAPI 的 schema property 需要有 `description` 才會讓 SK 看到參數說明。但 .NET 10 的 OpenAPI 生成器不會自動讀 `/// <summary>` XML comment。解法：
 
 ```
-/// <summary>產品料號</summary>      → 不會進 OpenAPI JSON ✗
-[Description("產品料號")]           → 會進 OpenAPI JSON ✓
+/// <summary>產品料號</summary>      → 不會進 OpenAPI JSON ❌
+[Description("產品料號")]           → 會進 OpenAPI JSON ✅
 ```
 
 所以在每個 DTO property 上加 `[Description]` 屬性。
